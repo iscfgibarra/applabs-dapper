@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Francisco Ibarrra</Authors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Company>AppLabs</Company>
+    <Description>Una abstracción de Unit Of Work y Repository para iniciar el trabajo con Dapper.</Description>
+    <Copyright>2019 ©AppLabs</Copyright>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/iscfgibarra/applabs-dapper</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/iscfgibarra/applabs-dapper</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>SqlServer, MySql, Postgresql , Dapper, .NET Core, Unit of Work,</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

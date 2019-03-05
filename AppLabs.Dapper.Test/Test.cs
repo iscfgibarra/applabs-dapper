@@ -31,6 +31,7 @@ namespace AppLabs.Dapper.Test
         [TestMethod]
         public async Task TraerLogPorRfc()
         {
+            
             var where = new WrapperExpression("h.RFC", 
                 Operators.Equals, 
                 "AAQM610917QJA");
