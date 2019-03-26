@@ -12,7 +12,6 @@ namespace AppLabs.Dapper
 
         public ProviderFactory()
         {
-            _defaultProviderType = ProviderType.SqlServer;
             Providers = new List<IDbProvider>();
         }
 
@@ -49,6 +48,11 @@ namespace AppLabs.Dapper
 
         public IDbProvider AddProvider(IDbProvider provider)
         {
+            if(_defaultProviderType != provider.ProviderType)
+            {
+                _defaultProviderType = provider.ProviderType;
+            }
+
             Providers.Add(provider);
             return provider;
         }

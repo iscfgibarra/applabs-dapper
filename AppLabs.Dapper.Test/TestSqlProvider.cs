@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace AppLabs.Dapper.Test
 {
     [TestClass]
-    public class Test
+    public class TestSqlProvider
     {
         private ProviderFactory _providerFactory;
         private LogRepository _logRepository;

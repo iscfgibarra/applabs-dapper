@@ -30,17 +30,17 @@ namespace AppLabs.Dapper
         public bool HasError { get; set; }
         public string ErrorMessage { get; set; }
 
-        public virtual string SelectClause => "*";
+        public virtual string SelectClause { get; set; } = "*";
 
-        public virtual string FromClause => "";
+        public virtual string FromClause { get; set; } = "";
 
-        public virtual string OrderByClause => "";
+        public virtual string OrderByClause { get; set; } = "";
        
         public virtual string GetAllQueryName => $"SELECT {SelectClause} FROM {FromClause}" + (!string.IsNullOrEmpty(OrderByClause) ? " ORDER BY " + OrderByClause : String.Empty) ;
 
         public virtual CommandType GetAllQueryType => CommandType.Text;
 
-        public virtual string GetFindQueryName => $"SELECT {SelectClause} FROM {FromClause}" + (!string.IsNullOrEmpty(OrderByClause) ? " ORDER BY " + OrderByClause : String.Empty);
+        public virtual string GetFindQueryName => $"SELECT {SelectClause} FROM {FromClause}"; 
         public virtual  CommandType GetFindQueryType => CommandType.Text;
         public virtual string GetCreateUpdateQueryName => "";
         public virtual CommandType GetCreateUpdateQueryType => CommandType.Text;
@@ -384,7 +384,7 @@ namespace AppLabs.Dapper
                 InitConnection();
 
                 itemFounded = Connection.Query<T>(GetFindQueryName, GetFindParameters(id),
-                    commandType: CommandType.StoredProcedure, transaction: Uow?.Transaction).FirstOrDefault();
+                    commandType: GetFindQueryType, transaction: Uow?.Transaction).FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -408,7 +408,7 @@ namespace AppLabs.Dapper
                 InitConnection();
 
                 var result = await Connection.QueryAsync<T>(GetFindQueryName, GetFindParameters(id),
-                    commandType: CommandType.StoredProcedure, transaction: Uow?.Transaction);
+                    commandType: GetFindQueryType, transaction: Uow?.Transaction);
 
                 itemFounded = result.FirstOrDefault();
             }
