@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Authors>Francisco Ibarrra</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Company>AppLabs</Company>
     <Description>Una abstracción de Unit Of Work y Repository para iniciar el trabajo con Dapper.</Description>
-    <Copyright>2019 ©AppLabs</Copyright>
+    <Copyright>2022 ©AppLabs</Copyright>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/iscfgibarra/applabs-dapper</PackageProjectUrl>
     <RepositoryUrl>https://github.com/iscfgibarra/applabs-dapper</RepositoryUrl>
@@ -15,10 +15,13 @@
     <AssemblyVersion>1.0.1.0</AssemblyVersion>
     <FileVersion>1.0.1.0</FileVersion>
     <Version>1.0.1</Version>
+    <LangVersion>10</LangVersion>
+    <PackageVersion>2.0.0</PackageVersion>
+    <Title>AppLabs.Dapper</Title>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AppLabs.QueryExpression" Version="1.0.0" />
+    <PackageReference Include="AppLabs.QueryExpression" Version="2.0.0" />
     <PackageReference Include="Dapper" Version="1.50.7" />
   </ItemGroup>
 

@@ -3,27 +3,29 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using AppLabs.Dapper.Interfaces;
+using AppLabs.Dapper.Abstractions;
 using AppLabs.QueryExpression;
 using Dapper;
 
 namespace AppLabs.Dapper
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class DbRepository<T> : IDbRepository<T> where T : class
     {
-        public IProviderFactory ProviderFactory { get; set; }
+        public IDbProviderFactory ProviderFactory { get; set; }
 
-        public Repository(IProviderFactory providerFactory)
+        protected IDbProvider DbProvider;
+        public DbRepository(IDbProviderFactory providerFactory)
         {
             ProviderFactory = providerFactory;            
-            ExecuteMode = ExecuteMode.Single;
+            ExecuteMode = DbExecuteMode.Single;
         }
 
-        public Repository(IUnitOfWork unitOfWork)
+        public DbRepository(IDbUnitOfWork unitOfWork)
         {
             Uow = unitOfWork;
+            DbProvider = Uow.Provider;
             Connection = Uow.Connection;
-            ExecuteMode = ExecuteMode.UnitOfWork;
+            ExecuteMode = DbExecuteMode.UnitOfWork;
         }
         
         
@@ -120,17 +122,15 @@ namespace AppLabs.Dapper
             return idSig;
         }
 
-        public bool Delete(int id)
+        public bool Delete(string id)
         {
             bool retval = false;
-
-
+            
             if (string.IsNullOrEmpty(GetDeleteQueryName))
                 throw new ArgumentException(
                     "La propiedad GetDeleteQueryName, no se ha establecido." +
                     "\n Ejem. GetDeleteQueryName => \"DELETE FROM TABLENAME WHERE id = @id \"");
-
-
+            
             try
             {                
                 InitConnection();
@@ -153,7 +153,7 @@ namespace AppLabs.Dapper
             return retval;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(string id)
         {
             bool retval = false;
 
@@ -201,7 +201,7 @@ namespace AppLabs.Dapper
             {
                 InitConnection();
 
-                list = Connection.Query<T>(GetAllQueryName, GetFindParameters(0), 
+                list = Connection.Query<T>(GetAllQueryName, GetFindParameters("0"), 
                     commandType: GetAllQueryType,
                     transaction: Uow?.Transaction).ToList();
             }
@@ -266,7 +266,7 @@ namespace AppLabs.Dapper
             {
                 InitConnection();
 
-                var result = await Connection.QueryAsync<T>(GetAllQueryName, GetFindParameters(0),
+                var result = await Connection.QueryAsync<T>(GetAllQueryName, GetFindParameters("0"),
                     commandType: GetAllQueryType , transaction: Uow?.Transaction);
 
                 list = result.ToList();
@@ -324,7 +324,7 @@ namespace AppLabs.Dapper
             {
                 InitConnection();
 
-                string selectQuery = $"SELECT {SelectClause} FROM {FromClause} WHERE {predicate.ToWhereClause()}";
+                string selectQuery = $"SELECT {SelectClause} FROM {FromClause} WHERE {predicate.ToWhereClause(DbProvider.GetDbType)}";
 
                 selectQuery += !string.IsNullOrEmpty(OrderByClause) ? $" ORDER BY {OrderByClause}" : String.Empty;
 
@@ -354,7 +354,7 @@ namespace AppLabs.Dapper
             {
                 InitConnection();
                 
-                string selectQuery = $"SELECT {SelectClause} FROM {FromClause} WHERE {predicate.ToWhereClause()}";
+                string selectQuery = $"SELECT {SelectClause} FROM {FromClause} WHERE {predicate.ToWhereClause(DbProvider.GetDbType)}";
 
                 selectQuery += !string.IsNullOrEmpty(OrderByClause) ? $" ORDER BY {OrderByClause}" : String.Empty;
 
@@ -375,7 +375,7 @@ namespace AppLabs.Dapper
             return items;
         }
 
-        public T Find(int id)
+        public T Find(string id)
         {
             T itemFounded = null;
 
@@ -399,7 +399,7 @@ namespace AppLabs.Dapper
             return itemFounded;
         }
 
-        public async Task<T> FindAsync(int id)
+        public async Task<T> FindAsync(string id)
         {
             T itemFounded = null;
 
@@ -430,12 +430,12 @@ namespace AppLabs.Dapper
             return null;
         }
 
-        public virtual object GetDeleteParameters(int id)
+        public virtual object GetDeleteParameters(string id)
         {
             return null;
         }
 
-        public virtual object GetFindParameters(int id)
+        public virtual object GetFindParameters(string id)
         {
             return null;
         }
@@ -448,23 +448,20 @@ namespace AppLabs.Dapper
 
         public IDbConnection Connection { get; set; }
 
-        public IUnitOfWork Uow { get; set; }
+        public IDbUnitOfWork Uow { get; set; }
 
-        public ExecuteMode ExecuteMode { get; set; }
+        public DbExecuteMode ExecuteMode { get; set; }
         public void InitConnection()
         {
-            if (ExecuteMode == ExecuteMode.Single)
-            {
-                if (Connection == null)
-                    Connection = ProviderFactory.GetDefaultProvider().GetConnection();
-
-                Connection.Open();
-            }
+            if (ExecuteMode != DbExecuteMode.Single) return;
+            DbProvider = ProviderFactory.GetDefaultProvider();
+            Connection ??= DbProvider.GetConnection();
+            Connection.Open();
         }
 
         public void FinalizeConnection()
         {
-            if (ExecuteMode == ExecuteMode.Single)
+            if (ExecuteMode == DbExecuteMode.Single)
             {
                 Connection?.Close();
             }

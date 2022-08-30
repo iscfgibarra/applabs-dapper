@@ -1,18 +1,28 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
-using AppLabs.Dapper.Interfaces;
+using AppLabs.Dapper.Abstractions;
+using AppLabs.QueryExpression;
 
 namespace AppLabs.Dapper.Test
 {
     public class SqlProvider : IDbProvider
     {
+        private DbProviderType _providerType;
+
         public SqlProvider()
         {
             ProviderName = "SqlLogConexion";
-            ProviderType = ProviderType.SqlServer;
+            ProviderType = DbProviderType.SqlServer;
         }
         public string ProviderName { get; set; }
-        public ProviderType ProviderType { get; set; }
+
+        DbProviderType IDbProvider.ProviderType
+        {
+            get => _providerType;
+            set => _providerType = value;
+        }
+
+        public DbProviderType ProviderType { get; set; }
         public string GetConnectionString()
         {
             return "Data Source=LOCALHOST\\STAMPING;Initial Catalog=DBLOG;User ID=sa;Password=123;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
@@ -22,5 +32,7 @@ namespace AppLabs.Dapper.Test
         {
             return new SqlConnection(GetConnectionString());
         }
+
+        public DbTypes GetDbType => DbTypes.MsSql;
     }
 }

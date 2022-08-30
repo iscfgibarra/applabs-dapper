@@ -9,13 +9,13 @@ namespace AppLabs.Dapper.Test
     [TestClass]
     public class TestSqlProvider
     {
-        private ProviderFactory _providerFactory;
+        private DbProviderFactory _providerFactory;
         private LogRepository _logRepository;
 
         [TestInitialize]
         public void IniciarFactory()
         {
-            _providerFactory = new ProviderFactory();
+            _providerFactory = new DbProviderFactory();
             _providerFactory.AddProvider(new SqlProvider());
             _logRepository = new LogRepository(_providerFactory);
         }
@@ -49,7 +49,7 @@ namespace AppLabs.Dapper.Test
                 "AAQM610917QJA");
 
             var rfc2 = new WrapperExpression("h.RFC", Operators.Equals, 
-                "CÑT040504890");
+                "Cï¿½T040504890");
 
             var where = new WrapperExpression(rfc1, Operators.Or, rfc2);
 

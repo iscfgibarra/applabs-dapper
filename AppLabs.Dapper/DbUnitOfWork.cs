@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Data;
-using AppLabs.Dapper.Interfaces;
+using AppLabs.Dapper.Abstractions;
 
 namespace AppLabs.Dapper
 {
-    public class UnitOfWork : IUnitOfWork
+    public class DbUnitOfWork : IDbUnitOfWork
     {
-        public UnitOfWork(IDbConnection connection)
+        public DbUnitOfWork(IDbConnection connection)
         {
             Connection = connection;
             Transaction = Connection.BeginTransaction();
@@ -31,6 +31,9 @@ namespace AppLabs.Dapper
        
         public IDbTransaction Transaction { get; set; }
         public IDbConnection Connection { get; set; }
+        
+        public IDbProvider Provider { get; set; }
+
         public void SaveChanges()
         {
             if (Transaction == null)

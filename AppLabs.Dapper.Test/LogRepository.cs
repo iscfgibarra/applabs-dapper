@@ -1,8 +1,9 @@
-﻿using AppLabs.Dapper.Interfaces;
+﻿using AppLabs.Dapper.Abstractions;
+
 
 namespace AppLabs.Dapper.Test
 {
-    public class LogRepository : Repository<LogMetadata>
+    public class LogRepository : DbRepository<LogMetadata>
     {
         public override string SelectClause => "h.Date, d.ErrorCode, d.Exception, h.ID as Id, h.Level, h.Logger, d.Message, h.RequestId, h.RFC, h.serviceid as ServiceId, d.ElapsedTime as Time";
 
@@ -10,12 +11,12 @@ namespace AppLabs.Dapper.Test
 
         public override string OrderByClause => "h.ID DESC";
 
-        public LogRepository(IProviderFactory providerFactory) : base(providerFactory)
+        public LogRepository(IDbProviderFactory providerFactory) : base(providerFactory)
         {
 
         }
 
-        public LogRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public LogRepository(IDbUnitOfWork unitOfWork) : base(unitOfWork)
         {
 
         }
