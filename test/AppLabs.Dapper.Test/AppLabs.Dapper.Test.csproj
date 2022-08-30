@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\AppLabs.Dapper\AppLabs.Dapper.csproj" />
     <ProjectReference Include="..\AppLabs.Dapper\AppLabs.Dapper.csproj" />
   </ItemGroup>
 

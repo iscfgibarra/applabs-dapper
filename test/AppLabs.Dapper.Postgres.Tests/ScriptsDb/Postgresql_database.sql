@@ -1,7 +1,11 @@
+
+--- FIRST CREATE DATABASE WITH admin user
 CREATE DATABASE dapper_test;
 CREATE USER dapper_user password 'test2022';
 GRANT ALL PRIVILEGES ON DATABASE dapper_test TO dapper_user;
 
+-- THEN CONNECT WITH dapper_user and create tables and execute inserts
+    
 CREATE TABLE shops
 (
   id serial PRIMARY KEY,

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppLabs.Dapper", "AppLabs.Dapper\AppLabs.Dapper.csproj", "{84AE0BA0-BA1C-4B57-AF72-20E4D1B7D035}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppLabs.Dapper", "src\AppLabs.Dapper\AppLabs.Dapper.csproj", "{84AE0BA0-BA1C-4B57-AF72-20E4D1B7D035}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppLabs.Dapper.Test", "AppLabs.Dapper.Test\AppLabs.Dapper.Test.csproj", "{8F96E82E-E5E6-45E2-B1CD-388CE6C8EADB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppLabs.Dapper.Test", "test\AppLabs.Dapper.Test\AppLabs.Dapper.Test.csproj", "{8F96E82E-E5E6-45E2-B1CD-388CE6C8EADB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppLabs.Dapper.Postgres.Tests", "test\AppLabs.Dapper.Postgres.Tests\AppLabs.Dapper.Postgres.Tests.csproj", "{222FE6AC-A50D-4D65-85BB-B64897F85C0B}"
 EndProject
