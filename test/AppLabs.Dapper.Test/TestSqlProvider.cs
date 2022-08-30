@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using AppLabs.Dapper.Test.Providers;
 using AppLabs.QueryExpression;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

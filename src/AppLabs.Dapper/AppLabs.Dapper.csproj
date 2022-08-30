@@ -16,13 +16,13 @@
     <FileVersion>1.0.1.0</FileVersion>
     <Version>1.0.1</Version>
     <LangVersion>10</LangVersion>
-    <PackageVersion>2.0.0</PackageVersion>
+    <PackageVersion>2.0.1</PackageVersion>
     <Title>AppLabs.Dapper</Title>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AppLabs.QueryExpression" Version="2.0.0" />
-    <PackageReference Include="Dapper" Version="1.50.7" />
+    <PackageReference Include="Dapper" Version="2.0.123" />
   </ItemGroup>
 
 </Project>

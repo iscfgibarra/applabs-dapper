@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 using AppLabs.Dapper.Abstractions;
 using AppLabs.QueryExpression;
 
-namespace AppLabs.Dapper.Test
+namespace AppLabs.Dapper.Test.Providers
 {
     public class SqlProvider : IDbProvider
     {
